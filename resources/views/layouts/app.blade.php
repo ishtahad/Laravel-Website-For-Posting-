@@ -18,7 +18,12 @@
         <!-- here yield is written to show that there will be content. and we can add this content through different pages -->
         @include('inc.navbar')
         <div class = "container">
+              @include('inc.messages')
               @yield('content')
-        </div>      
+        </div>     
+         <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+         <script>
+          CKEDITOR.replace( 'article-ckeditor' );
+         </script> 
     </body>    
 </html>

@@ -35,4 +35,7 @@ Route::get('/', 'PagesController@index');
 
 Route::get('/about', 'PagesController@about');
 Route::get('/services', 'PagesController@services');
+
+//PostsController controllers has many functions to route. it would take too much time to do all that
+//a really simple way of doing this would be the below given way
 Route::resource('posts','PostsController');

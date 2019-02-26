@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+//to bring the model from post.php. in Post.php the model has namespace App and the models name is Post thus below line
+
+use App\Post;
 
 class PostsController extends Controller
 {
@@ -14,6 +17,11 @@ class PostsController extends Controller
     public function index()
     {
         //
+       // $posts = Post::all();
+       // to find a product by a title which is Post Two the below line should be written
+       // post::where('title','Post Two')->get();
+       $posts = Post::orderBy('created_at','desc')->paginate(2);
+        return view('posts.index')-> with('posts',$posts);
     }
 
     /**
@@ -24,6 +32,7 @@ class PostsController extends Controller
     public function create()
     {
         //
+        return view('posts.create');
     }
 
     /**
@@ -34,7 +43,18 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+        //create Post
+        $post = new Post;
+        $post->title = $request->input('title');
+         $post->body = $request->input('body');
+         $post->save();
+         return redirect('/posts')-> with('sucess', 'Post Created');
+
+        
     }
 
     /**
@@ -46,6 +66,8 @@ class PostsController extends Controller
     public function show($id)
     {
         //
+        $post = Post::find($id);
+        return view('posts.show')->with('post',$post);
     }
 
     /**
